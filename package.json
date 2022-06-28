@@ -1,0 +1,20 @@
+{
+  "name": "module-federation-along-next",
+  "packageManager": "yarn@3.2.0",
+  "private": true,
+  "workspaces": [
+    "host",
+    "remote/**/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev"
+  },
+  "devDependencies": {
+    "esbuild-loader": "^2.19.0",
+    "turbo": "^1.2.6"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
