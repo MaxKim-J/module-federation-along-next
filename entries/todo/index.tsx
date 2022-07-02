@@ -1,4 +1,4 @@
-// @ts-ignore
-import bootstrap from './bootstrap';
+window.remoteTodoEntryUrl =
+  PROCESS.env.NODE_ENV === 'development' ? 'http://localhost:3002' : 'prodUrl';
 
-bootstrap(() => {});
+import('./bootstrap');

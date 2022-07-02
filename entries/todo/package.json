@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "author": "Max Jonghyuk Kim",
   "scripts": {
-    "start": "yarn build && serve -l tcp://localhost:3001 dist",
-    "build": "webpack",
-    "check-type": "tsc"
+    "start": "webpack serve --config webpack.config.js --env=env='development'",
+    "build": "webpack --config webpack.config.js --env=env='production'",
+    "type-check": "tsc"
   },
   "dependencies": {
     "@types/react": "^17.0.20",
