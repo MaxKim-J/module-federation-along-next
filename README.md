@@ -4,9 +4,9 @@ webpack module federation 환경에서, next를 얼마나 써먹을 수 있을�
 
 ## 설계
 
-- [ ] Next에서 페이지 하나당 single entry를 가지는 federated module과 SSG/ISR fallback
-- [ ] (될까?) 적당(?)하게 공통 의존성 들고있기
-- [ ] (될까?) SSR 사용
+- [x] Next에서 페이지 하나당 single entry를 가지는 federated module과 SSG fallback
+- [ ] 각 워크스페이스를 독립적으로 띄울 수 있는 DX
+- [ ] s3로 배포 환경 구축하기(s3, docker heroku?)
 - [ ] 공통요소를 배포하는 것으로 변경사항 적용하기
 - [ ] 봐줄만한 DX
 
@@ -21,12 +21,11 @@ webpack module federation 환경에서, next를 얼마나 써먹을 수 있을�
   - 배포 단위를 하나의 앱만 수정할 수 있을... 니즈를 가지고 진행되어야 하면 좋을 것 같음
 - Next는 청킹할때 React, React-dom을 묶어서 framework 번들로 만들어내는데, 그 아래 federation는 이 번들을 사용할 수 있나?
   - 딱 봤을때는 못하는거같긴한데, React를 두번 불러오지는 또 않는것 같아서
-  - 뭔가 module federation만의 번들 불러오는 그런 무언가가 있나 싶음
-
-## 대안..?
+  - 뭔가 module federation만의 번들 불러오는 그런 무언가가 있나 싶음 -> 이거는 한번 따로 공부해보기
 
 ## 의문점
 
 - next는 어디까지 역할을 할까?
 - remote앱들 굳이 package의 형태를 취해야 할까? 혹은 하나하나가 배포단위라고 보면?
 - next에서 잘 있을 수 있게 즉당한 구조를 가질 수 있게 해야한다.
+- 공통모듈 의존시키는거 어려울거같은데... 걔도 어쨋든 다이나믹 임포트 되야되는거 아닌가

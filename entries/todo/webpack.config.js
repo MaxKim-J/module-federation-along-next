@@ -1,5 +1,6 @@
 const { ModuleFederationPlugin } = require('webpack').container;
 const { ProvidePlugin } = require('webpack');
+// const TerserPlugin = require('terser-webpack-plugin');
 const packageJson = require('./package.json');
 const path = require('path');
 
@@ -22,6 +23,9 @@ const webpackConfig = ({ target, env }) => {
       compress: true,
       port: 3002,
     },
+    optimization: {
+      minimize: false,
+    },
     module: {
       rules: [
         {
@@ -29,6 +33,7 @@ const webpackConfig = ({ target, env }) => {
           loader: 'esbuild-loader',
           options: {
             loader: 'tsx',
+            minify: true,
             target: ['chrome62', 'safari14'],
           },
         },
