@@ -29,10 +29,10 @@ const webpackConfig = ({ standalone, env }) => {
   } else {
     plugins.push(
       new ModuleFederationPlugin({
-        name: 'todoEntry',
+        name: 'calculatorEntry',
         filename: 'remoteEntry.js',
         exposes: {
-          './Todo': './src/Todo.tsx',
+          './Calculator': './src/Calculator.tsx',
         },
         shared: {
           react: {
@@ -62,7 +62,7 @@ const webpackConfig = ({ standalone, env }) => {
         directory: path.join(__dirname, 'dist'),
       },
       compress: true,
-      port: 3002,
+      port: 3003,
       open: true,
     },
     optimization: {
