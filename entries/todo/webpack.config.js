@@ -3,9 +3,12 @@ const { ProvidePlugin } = require('webpack');
 const packageJson = require('./package.json');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { remotes } = require('../../remote.config');
 
 const webpackConfig = ({ standalone, env }) => {
-  const PRODUCTION = env === 'production';
+  const { name, port } = remotes['todo'];
+
+  const isProduction = env === 'production';
   const isStandalone = Boolean(standalone);
 
   const plugins = [
@@ -29,7 +32,7 @@ const webpackConfig = ({ standalone, env }) => {
   } else {
     plugins.push(
       new ModuleFederationPlugin({
-        name: 'todoEntry',
+        name,
         filename: 'remoteEntry.js',
         exposes: {
           './Todo': './src/Todo.tsx',
@@ -62,7 +65,7 @@ const webpackConfig = ({ standalone, env }) => {
         directory: path.join(__dirname, 'dist'),
       },
       compress: true,
-      port: 3002,
+      port,
       open: true,
     },
     optimization: {

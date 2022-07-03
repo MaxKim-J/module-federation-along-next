@@ -4,11 +4,15 @@ webpack module federation 환경에서, next를 얼마나 써먹을 수 있을�
 
 ## 설계
 
-- [x] Next에서 페이지 하나당 single entry를 가지는 federated module과 SSG fallback
-- [ ] 각 워크스페이스를 독립적으로 띄울 수 있는 DX
-- [ ] s3로 배포 환경 구축하기(s3, docker heroku?)
+- [x] Next에서 페이지 하나당 single entry를 가지는 federated module
+- [ ] 클라이언트, 서버 라우팅간 vendor 양상 파악 -> 블로그 글감,,,
+- [x] 각 entries 앱을 독립적으로 띄울 수 있는 DX(standalone)
+- [ ] Full SSG fallback - Next앱 전체를 스태틱으로 구성하기
+- [x] 배포 환경에 따른 path 구축 -> Next의 PROCESS.env 사용
+- [x] 단일한 config 구성
+- [ ] turborepo를 써먹을 여지를 엿보기
+- [ ] s3로 배포 환경 구축하기(remote - s3, host - docker heroku?)
 - [ ] 공통요소를 배포하는 것으로 변경사항 적용하기
-- [ ] 봐줄만한 DX
 
 ## 느낀점
 

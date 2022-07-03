@@ -3,9 +3,12 @@ const { ProvidePlugin } = require('webpack');
 const packageJson = require('./package.json');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { remotes } = require('../../remote.config');
 
 const webpackConfig = ({ standalone, env }) => {
-  const PRODUCTION = env === 'production';
+  const { name, port } = remotes['calculator'];
+
+  const isProduction = env === 'production';
   const isStandalone = Boolean(standalone);
 
   const plugins = [
@@ -29,7 +32,7 @@ const webpackConfig = ({ standalone, env }) => {
   } else {
     plugins.push(
       new ModuleFederationPlugin({
-        name: 'calculatorEntry',
+        name,
         filename: 'remoteEntry.js',
         exposes: {
           './Calculator': './src/Calculator.tsx',
@@ -62,8 +65,8 @@ const webpackConfig = ({ standalone, env }) => {
         directory: path.join(__dirname, 'dist'),
       },
       compress: true,
-      port: 3003,
-      open: true,
+      port,
+      open: isStandalone,
     },
     optimization: {
       minimize: false,
