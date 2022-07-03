@@ -3,13 +3,55 @@ const { ProvidePlugin } = require('webpack');
 // const TerserPlugin = require('terser-webpack-plugin');
 const packageJson = require('./package.json');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const webpackConfig = ({ target, env }) => {
+const webpackConfig = ({ standalone, env }) => {
   const PRODUCTION = env === 'production';
+  const isStandalone = Boolean(standalone);
+
+  const plugins = [
+    new ProvidePlugin({
+      React: 'react',
+    }),
+  ];
+
+  if (isStandalone) {
+    plugins.push(
+      new HtmlWebpackPlugin({
+        template: './public/index.html',
+        minify: {
+          collapseWhitespace: true,
+          removeComments: true,
+          minifyJS: true,
+        },
+        hash: false,
+      })
+    );
+  } else {
+    plugins.push(
+      new ModuleFederationPlugin({
+        name: 'todoEntry',
+        filename: 'remoteEntry.js',
+        exposes: {
+          './Todo': './src/Todo.tsx',
+        },
+        shared: {
+          react: {
+            singleton: true,
+            requiredVersion: packageJson.dependencies['react'],
+          },
+          'react-dom': {
+            singleton: true,
+            requiredVersion: packageJson.dependencies['react-dom'],
+          },
+        },
+      })
+    );
+  }
 
   return {
     mode: env,
-    entry: './src/index.tsx',
+    entry: isStandalone ? './bootstrap.tsx' : './index.tsx',
     output: {
       path: path.resolve(__dirname, 'dist'),
     },
@@ -22,6 +64,7 @@ const webpackConfig = ({ target, env }) => {
       },
       compress: true,
       port: 3002,
+      open: true,
     },
     optimization: {
       minimize: false,
@@ -39,28 +82,7 @@ const webpackConfig = ({ target, env }) => {
         },
       ],
     },
-    plugins: [
-      new ProvidePlugin({
-        React: 'react',
-      }),
-      new ModuleFederationPlugin({
-        name: 'todoEntry',
-        filename: 'remoteEntry.js',
-        exposes: {
-          './Todo': './src/Todo.tsx',
-        },
-        shared: {
-          react: {
-            singleton: true,
-            requiredVersion: packageJson.dependencies['react'],
-          },
-          'react-dom': {
-            singleton: true,
-            requiredVersion: packageJson.dependencies['react-dom'],
-          },
-        },
-      }),
-    ],
+    plugins,
   };
 };
 
