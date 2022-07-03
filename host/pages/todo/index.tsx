@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import type { NextPage } from 'next';
 import { ClientSuspense } from '@max-mf/utils';
 
-const TodoEntry = lazy(() => import('todoEntry/Todo'));
+const TodoEntry = lazy(() => import('todo/Todo'));
 
 const Todo: NextPage = () => {
   return (
